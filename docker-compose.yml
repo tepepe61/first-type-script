@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  react-app:
+    # env_fileで.envを指定すると、コンテナ内のnodeモードでprocess.envを参照できる
+    env_file: ./first-type-script/.env.local
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # volumesの:右側のディレクトリもコンテナ内にできて、:左側の内容と同じものがある。
+    volumes:
+      - .:/first-type-script
+    # 下記commandがないとcompose up した時にreactが作動しない。
+    command: sh -c "cd first-type-script && npm start"
+    ports:
+      - "3000:3000"
+    stdin_open: true
